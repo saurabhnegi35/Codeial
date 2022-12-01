@@ -1,3 +1,3 @@
-module.exports.profile = function (re1, res) {
+module.exports.profile = function(req, res){
     res.end('<h1>User Profile</h1>');
 }
