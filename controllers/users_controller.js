@@ -4,3 +4,17 @@ module.exports.profile = function(req, res){
         title: "User Profile"
     });
 }
+
+// Render the Sign Up Page
+module.exports.signUp = function(req, res){
+    return res.render('user_sign_up', {
+        title: "Codieal | Sign Up"
+    });
+}
+
+// Render the Sign Up Page
+module.exports.signIn = function(req, res){
+    return res.render('user_sign_in', {
+        title: "Codieal | Sign In"
+    });
+}
