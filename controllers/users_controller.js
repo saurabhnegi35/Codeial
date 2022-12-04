@@ -87,6 +87,10 @@ module.exports.createSession = function(req, res){
             return res.redirect('back');
         }
     });
-
         
+}
+
+module.exports.endSession = function(req,res){
+    res.clearCookie('user_id');
+    return res.redirect('/users/sign-in');
 }

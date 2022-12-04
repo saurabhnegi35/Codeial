@@ -7,5 +7,7 @@
         <p>Email: <%= user.email %></p>
         <p>Password: <%= user.password %></p>
 
-        <a href="/users/sign-in">Sign Out</a>
+        <form action="/users/end-session" method="POST">
+                <input type="submit" value="logout">
+            </form>
        
