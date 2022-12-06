@@ -9,13 +9,21 @@ module.exports.profile = function(req, res){
 
 // Render the Sign Up Page
 module.exports.signUp = function(req, res){
+    if(req.isAuthenticated()) {
+        return res.redirect('/users/profile');
+    }
+
     return res.render('user_sign_up', {
         title: "Codieal | Sign Up"
     });
 }
 
-// Render the Sign Up Page
+// Render the Sign In Page
 module.exports.signIn = function(req, res){
+    if(req.isAuthenticated()) {
+        return res.redirect('/users/profile');
+    }
+    
     return res.render('user_sign_in', {
         title: "Codieal | Sign In"
     });
@@ -43,8 +51,23 @@ module.exports.create = function(req, res){
     });
 }
 
-
 // SignIn and Create the session for the user
 module.exports.createSession = function(req, res){
-    //TODO Later
+    return res.redirect('/');
+}
+
+module.exports.destroySession = function(req, res){
+    
+    //Since version 0.6.0 major change is that that req.logout()
+    // is now an asynchronous function, whereas previously it was synchronous. 
+    //For instance, a logout route that was previously:
+    
+    // req.logout();
+
+    //but afterwards req.logout is
+    req.logout(function(err) {
+        if (err) { return next(err); }
+
+        return res.redirect('/');
+})
 }
