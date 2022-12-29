@@ -1,5 +1,6 @@
 const User = require('../models/user');
 
+
 module.exports.profile = function(req, res){
     // res.end('<h1>User Profile</h1>');
     User.findById(req.params.id, function(err, user) {
@@ -67,6 +68,7 @@ module.exports.create = function(req, res){
 
 // SignIn and Create the session for the user
 module.exports.createSession = function(req, res){
+    req.flash('success', 'Logged in Successfully');
     return res.redirect('/');
 }
 
@@ -80,7 +82,9 @@ module.exports.destroySession = function(req, res){
 
     //but afterwards req.logout is
     req.logout(function(err) {
-        if (err) { return next(err); }
+        if (err) { return next(err); 
+        }
+        req.flash('success', 'Logged Out Successfully');
 
         return res.redirect('/');
 })
