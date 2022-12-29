@@ -1,0 +1,17 @@
+<li>
+    <p>
+
+        <% if (locals.user && locals.user.id == comments.user.id) { %> 
+            <small>
+                <a href="/comments/destroy/<%=comments.id%>">D</a>
+            </small>
+            <% } %>
+        <%= comments.content %>
+        <br>
+        <small> 
+        <%=comments?.user?.name %>
+        <br>
+        <p>This Comment was Created At : <%=comments?.createdAt %></p>
+        </small> 
+    </p>
+</li>
