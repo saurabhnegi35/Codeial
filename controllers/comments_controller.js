@@ -2,8 +2,8 @@ const Comment = require('../models/comment');
 const Post = require('../models/post');
 
 module.exports.create = async function(req, res){
-    
-    try {
+
+    try{
         let post = await Post.findById(req.body.post);
 
         if (post){
@@ -12,39 +12,43 @@ module.exports.create = async function(req, res){
                 post: req.body.post,
                 user: req.user._id
             });
-            // handle error
+
             post.comments.push(comment);
             post.save();
+            req.flash('success', 'Comment published!');
 
-            req.flash('success', 'Comment Created Successfully');
-            res.redirect('/');           
+            res.redirect('/');
         }
-    }catch (err) {
+    }catch(err){
         req.flash('error', err);
-        return res.redirect(back);
+        return;
     }
-}
     
+}
 
-module.exports.destroy = async function(req, res) {
-    try {
+
+module.exports.destroy = async function(req, res){
+
+    try{
         let comment = await Comment.findById(req.params.id);
-        if (comment.user == req.user.id) {
+
+        if (comment.user == req.user.id){
 
             let postId = comment.post;
 
             comment.remove();
 
-            let post = await Post.findByIdAndUpdate(postId, {$pull: {comments: req.params.id}});
-            req.flash('success', 'Comment Deleted Successfully')
-                return res.redirect('back');
-            
-        }else {
-            req.flash('error', 'You Cannot Delete this Comment')
+            let post = Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
+            req.flash('success', 'Comment deleted!');
+
+            return res.redirect('back');
+        }else{
+            req.flash('error', 'Unauthorized');
             return res.redirect('back');
         }
-    }catch (err) {
+    }catch(err){
         req.flash('error', err);
-        return res.redirect(back);
+        return;
     }
+    
 }
