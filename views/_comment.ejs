@@ -11,6 +11,18 @@
         <small>
             <%= comment.user.name %>
         </small>
+        <!-- Change :: Display the Likes of this Comment, if the user is logged in, then show the link to toogle likes, else,just show the count -->
+        <br>
+        <!-- study about data attribute -->
+        <small>
+            <% if (locals.user) { %>
+                <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
+                    <%= comment.likes.length %> <i class="fa-solid fa-thumbs-up"></i>
+                </a>
+                <% } else { %>
+                    <%= comment.likes.length %> <i class="fa-solid fa-thumbs-up"></i>
+                <% } %>  
+        </small>
     </p>    
 
 </li>

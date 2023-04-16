@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/chat_box.css">
 
 <div id="home-container">
     <section id="feed-posts">
@@ -30,8 +31,86 @@
                 </p>
             <% } %>
         </section>
+        
+    <%- include('_chat_box') -%>
+
+    <section>
+        <div id="" class=""
+          >
+            <h5>Friends</h5>
+            <h5><%=locals?.user?.friendship?.length%></h5>
+        </div>
+
+
+
+        <div class="" id="">
+            <div id="absolute-div-user">
+              <div>
+                <h4>Users</h4>
+                <%for(u of all_users){%>
+                <div class="">
+                  <h3 class="">
+                    <%if(u.avatar){%>
+                    <img src="<%=u.avatar%>" alt="image" />
+                    <%}else{%>
+                    <img
+                      src="<%= assetPath('images/codeial-default-avatar2.png') %>"
+                      alt="image"
+                    />
+                    <%}%>
+                  </h3>
+                  <p class="profile-name-holder">
+                    <a href="/users/profile/<%=u._id%>"><%=u.name%></a>
+                  </p>
+                </div>
+                <%}%>
+              </div>
+              <div>
+                <%if(locals.user){%>
+                <h4>Friends</h4>
+                <%for(friends of all_friends.friendship){%>
+                <div class="">
+                  <h3 class="">
+                    <%if(friends.avatar){%>
+                    <img src="<%=friends.avatar%>" alt="image" />
+                    <%}else{%>
+                    <img
+                      src="<%= assetPath('images/codeial-default-avatar2.png') %>"
+                      alt="image"
+                    />
+                    <%}%>
+                  </h3>
+                  <p class="">
+                    <a href="/users/profile/<%=friends._id%>"><%=friends.name%></a>
+                  </p>
+                </div>
+                <%}%> <%}%>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+
 </div>
 
 <!-- importing this script for creating the comments -->
 <script src="/js/home_post_comments.js" ></script>
 <script src="/js/home_posts.js"></script>
+
+<!-- CHANGE :: import the script file for toggle likes, also run it over for the already present posts and comments on the page -->
+<script src="js/toggle_likes.js"></script>
+<script>
+    $('.toggle-like-button').each(function(){
+        let self = this;
+        let toggleLike = new ToggleLike(self);
+    });
+</script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.5/socket.io.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.js" integrity="sha512-VJ6+sp2E5rFQk05caiXXzQd1wBABpjEj1r5kMiLmGAAgwPItw1YpqsCCBtq8Yr1x6C49/mTpRdXtq8O2RcZhlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/js/chat_engine.js"></script>
+<% if (locals.user){ %>
+<script>
+    new ChatEngine('user-chat-box', '<%= locals.user.email %>')
+</script>
+<% } %>
